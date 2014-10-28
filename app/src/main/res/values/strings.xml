@@ -13,8 +13,17 @@
     <string name="by">By</string>
     <string name="book_author">Book Author</string>
     <string name="book_description">The reaping is a nerve-wracking time because it determines which boy and girl, ages 12 to 18, will serve as the district\'s tributes in the Hunger Games. Two tributes are drawn in each of the 12 districts, and those tributes are sent to an arena where they fight until only one tribute remains alive. The victor gets to return home, and the victor\'s district is showered with gifts — namely food. The Games, put on by the Capitol, are meant to punish the 12 districts of Panem as well as to remind them of the Dark Days and how the 13th district was obliterated for its uprising against the tyrannical and cruel Capitol. \n The reaping is a nerve-wracking time because it determines which boy and girl, ages 12 to 18, will serve as the district\'s tributes in the Hunger Games. Two tributes are drawn in each of the 12 districts, and those tributes are sent to an arena where they fight until only one tribute remains alive. The victor gets to return home, and the victor\'s district is showered with gifts — namely food. The Games, put on by the Capitol, are meant to punish the 12 districts of Panem as well as to remind them of the Dark Days and how the 13th district was obliterated for its uprising against the tyrannical and cruel Capitol.</string>
+    <string name="choose_genre">Choose Genre(s):</string>
 
-
-
+    <string-array name="genre_list">
+        <item>Fantasy</item>
+        <item>Comedy</item>
+        <item>Historical Fiction</item>
+        <item>Nonfiction</item>
+        <item>Autobiography</item>
+        <item>Children</item>
+    </string-array>
+    <string name="hello_world">Hello world!</string>
+    <string name="search_results_title">Uncommon Books</string>
 
 </resources>

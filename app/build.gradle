@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 17
-    buildToolsVersion "21.0.1"
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
-        applicationId "com.example.isabella.booktesting"
+        applicationId "com.example.isabella.uncommonbooks"
         minSdkVersion 14
         targetSdkVersion 17
         versionCode 1

@@ -2,52 +2,100 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\jsr305-1.3.9-7cb244cf68bd65c8004219ce8a1e420184ede699.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-services-books-v1-rev60-1.19.0-3b5ed27b6e56ae2840e898098b3e45a7b9e070c6.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.apis\google-api-services-books\v1-rev60-1.19.0\3bd9c14c9f65389ed73c47ed7c14118f2a3021d2\google-api-services-books-v1-rev60-1.19.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3bd9c14c9f65389ed73c47ed7c14118f2a3021d2"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-oauth-client-1.19.0-5a4916fb2bbf6008445e208de4e47ef134fe549c.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.19.0\d473a8962e14a707a3716637e4898bb2dd9643f2\google-oauth-client-1.19.0.jar"
         jumboMode="false"
         revision="21.0.1"
-        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf"/>
+        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2"/>
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-services-books-v1-rev60-1.19.0-cc46d8e45bfaa04181f0e408bbad1d01e823c2b6.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.apis\google-api-services-books\v1-rev60-1.19.0\3bd9c14c9f65389ed73c47ed7c14118f2a3021d2\google-api-services-books-v1-rev60-1.19.0.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\guava-jdk5-13.0-25cd1dbb161acbbce84d8ca8aa53dd5b90dae1d0.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-services-books-v1-rev60-1.19.0-3b5ed27b6e56ae2840e898098b3e45a7b9e070c6.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.apis\google-api-services-books\v1-rev60-1.19.0\3bd9c14c9f65389ed73c47ed7c14118f2a3021d2\google-api-services-books-v1-rev60-1.19.0.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="3bd9c14c9f65389ed73c47ed7c14118f2a3021d2"/>
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-1.19.0-bec637df9cad7bd6dc7f04fa7e49b46ac44298ee.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.19.0\cdca49ad0977c040f603478aa2e16b2775c8fec6\google-http-client-1.19.0.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-1.19.0-55fa00386bd7d3db7738cef49060726c6bfde3a8.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.19.0\cdca49ad0977c040f603478aa2e16b2775c8fec6\google-http-client-1.19.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="cdca49ad0977c040f603478aa2e16b2775c8fec6"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-1.19.0-55fa00386bd7d3db7738cef49060726c6bfde3a8.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.19.0\cdca49ad0977c040f603478aa2e16b2775c8fec6\google-http-client-1.19.0.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="cdca49ad0977c040f603478aa2e16b2775c8fec6"/>
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.19.0-108035e1060a8ae4e2d600fc22f62fd3a93014c5.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.19.0\81dbf9795d387d5e80e55346582d5f2fb81a42eb\google-http-client-jackson2-1.19.0.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="81dbf9795d387d5e80e55346582d5f2fb81a42eb"/>
-    <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\guava-jdk5-13.0-45416d2118b8927bee0dbc3a8057149966cf8d87.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\guava-jdk5-13.0-25cd1dbb161acbbce84d8ca8aa53dd5b90dae1d0.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.guava\guava-jdk5\13.0\381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7\guava-jdk5-13.0.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7"/>
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-client-1.19.0-d96e03ea7c324f0638d234edd826ce8dfa156ac3.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.19.0\6a21277d9bebe267b7ddee028b241eebc756c040\google-api-client-1.19.0.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-client-1.19.0-ba0a15b88041c87279bcccc4b11c38f59d4d9d00.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.19.0\6a21277d9bebe267b7ddee028b241eebc756c040\google-api-client-1.19.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="6a21277d9bebe267b7ddee028b241eebc756c040"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\jsr305-1.3.9-f3a1fc831ffd1df574492aa1c30d1951e33fdca9.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-oauth-client-1.19.0-5a4916fb2bbf6008445e208de4e47ef134fe549c.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.19.0\d473a8962e14a707a3716637e4898bb2dd9643f2\google-oauth-client-1.19.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.19.0-3ef3744d90fcfe2b019a2e2a92818931c4c711b5.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.19.0\81dbf9795d387d5e80e55346582d5f2fb81a42eb\google-http-client-jackson2-1.19.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="81dbf9795d387d5e80e55346582d5f2fb81a42eb"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.19.0-3ef3744d90fcfe2b019a2e2a92818931c4c711b5.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.19.0\81dbf9795d387d5e80e55346582d5f2fb81a42eb\google-http-client-jackson2-1.19.0.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="81dbf9795d387d5e80e55346582d5f2fb81a42eb"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-client-1.19.0-ba0a15b88041c87279bcccc4b11c38f59d4d9d00.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.19.0\6a21277d9bebe267b7ddee028b241eebc756c040\google-api-client-1.19.0.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="6a21277d9bebe267b7ddee028b241eebc756c040"/>
     <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\jackson-core-2.1.3-246813ebe37afe44fc6319efb94b91b3ae7c058e.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.1.3\f6c3aed1cdfa21b5c1737c915186ea93a95a58bd\jackson-core-2.1.3.jar"
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\jackson-core-2.1.3-042177d38523b2d5fac95a916f0c4f2cb7464c85.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.1.3\f6c3aed1cdfa21b5c1737c915186ea93a95a58bd\jackson-core-2.1.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\jsr305-1.3.9-f3a1fc831ffd1df574492aa1c30d1951e33fdca9.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf"/>
+    <item
+        dex="C:\Users\B\Desktop\Android Workspace\UncommonBooks\app\build\intermediates\pre-dexed\debug\jackson-core-2.1.3-042177d38523b2d5fac95a916f0c4f2cb7464c85.jar"
+        jar="C:\Users\B\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.1.3\f6c3aed1cdfa21b5c1737c915186ea93a95a58bd\jackson-core-2.1.3.jar"
         jumboMode="false"
         revision="21.0.1"
         sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd"/>
-    <item
-        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-oauth-client-1.19.0-b6cf19e4566bc03a9aa2bfabb0cdc05284d817fe.jar"
-        jar="C:\Users\Isabella\.gradle\caches\modules-2\files-2.1\com.google.oauth-client\google-oauth-client\1.19.0\d473a8962e14a707a3716637e4898bb2dd9643f2\google-oauth-client-1.19.0.jar"
-        jumboMode="false"
-        revision="21.0.1"
-        sha1="d473a8962e14a707a3716637e4898bb2dd9643f2"/>
 
 </pre-dex-items>
