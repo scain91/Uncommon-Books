@@ -1,4 +1,4 @@
-package com.example.isabella.booktesting;
+package com.example.isabella.uncommonbooks;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
