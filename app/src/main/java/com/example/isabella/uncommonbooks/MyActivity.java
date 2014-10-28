@@ -66,8 +66,8 @@ public class MyActivity extends Activity {
     }
 
     public void random_button_listener(View v){
-        System.out.println("In button listener");
         Intent intent = new Intent(this, DetailActivity.class);
         startActivity(intent);
+        System.out.println("In button listener");
     }
 }
