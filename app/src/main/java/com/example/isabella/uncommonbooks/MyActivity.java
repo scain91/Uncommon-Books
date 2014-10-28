@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.content.Intent;
 import com.google.api.services.books.Books;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.books.BooksRequestInitializer;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+
 
 
 
@@ -60,5 +63,11 @@ public class MyActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void random_button_listener(View v){
+        System.out.println("In button listener");
+        Intent intent = new Intent(this, DetailActivity.class);
+        startActivity(intent);
     }
 }

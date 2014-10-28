@@ -51,6 +51,7 @@
 
     <Button
         android:id="@+id/random_books_button"
+        android:onClick="random_button_listener"
         android:text="@string/random_button_text"
         android:gravity="center_vertical"
         android:layout_gravity="center_horizontal"
