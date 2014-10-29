@@ -52,6 +52,11 @@ public class DetailActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if(id == R.id.view_lists){
+            Intent intent = new Intent(this, ListOfListsActivity.class);
+            startActivity(intent);
+            System.out.println("Got past startActivity");
+        }
         return super.onOptionsItemSelected(item);
     }
 }
