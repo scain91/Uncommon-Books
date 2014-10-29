@@ -1,6 +1,8 @@
 package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 
 public class DetailActivity extends Activity {
@@ -58,6 +63,26 @@ public class DetailActivity extends Activity {
             System.out.println("Got past startActivity");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void addBookToList(View v) {
+
+        //This array should be a global variable of the user's lists that the whole app can access
+        final String user_lists[] = {"List A", "List B", "List C"};
+        boolean nothing[] = new boolean[3];
+        AlertDialog.Builder listPopUp = new AlertDialog.Builder(this);
+        listPopUp.setTitle(R.string.choose_list);
+        listPopUp.setItems(user_lists, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //Add to user's lists
+                Toast toast = Toast.makeText(getApplicationContext(), "Book added to " + user_lists[whichButton], Toast.LENGTH_SHORT);
+                toast.show();
+                Toast t = Toast.makeText(getApplicationContext(), "Just kidding, we haven't implemented that yet...", Toast.LENGTH_SHORT);
+                t.show();
+            }
+        });
+        listPopUp.show();
     }
 }
 

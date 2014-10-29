@@ -50,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-
     <Button
         android:id="@+id/random_books_button"
         android:onClick="random_button_listener"
