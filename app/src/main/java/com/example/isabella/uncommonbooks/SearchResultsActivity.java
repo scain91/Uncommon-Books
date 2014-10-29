@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+
+
+
 import java.util.ArrayList;
 
 
@@ -20,15 +23,13 @@ public class SearchResultsActivity extends Activity {
         setContentView(R.layout.activity_search_results);
 
         ListView listview = (ListView) findViewById(R.id.results_listview);
-        String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile"};
+        String[] values = new String[]{"Dictionary", "Harry Potter and the Sorcerer's Stone",
+                "The Lorax", "The Scarlet Letter", "Ishmael", "Fight Club",
+                "Everything's An Argument", "Introduction to Computer Systems"};
 
         final ArrayList<Book> list = new ArrayList<Book>();
         for (int i = 0; i < values.length; i++) {
-            Book newBook = new Book("names", "author", 0, "description", 5, 50);
+            Book newBook = new Book(values[i], "author " + i, 0, "description", 5, 50);
             list.add(newBook);
         }
 
@@ -42,11 +43,14 @@ public class SearchResultsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                Book item = (Book) parent.getItemAtPosition(position);
+                Book book = (Book) parent.getItemAtPosition(position);
                 //make a new activity
                 Intent intent = new Intent(view.getContext(), DetailActivity.class);
+                Bundle b = new Bundle();
+                b.putString("title", book.getTitle());
+                b.putString("author", book.getAuthor());
+                intent.putExtras(b);
                 startActivity(intent);
-                System.out.println("Item Clicked");
             }
         });
     }

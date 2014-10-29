@@ -1,12 +1,15 @@
 package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-
-
+import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 
 
 public class DetailActivity extends Activity {
@@ -17,9 +20,18 @@ public class DetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-        System.out.println("Created");
 
 
+        //If coming from results list
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            TextView txtTitle = (TextView) findViewById(R.id.title_book);
+            TextView txtAuthor = (TextView) findViewById(R.id.author_book);
+            //TextView txtDescription = (TextView) findViewById(R.id.description_book);
+            txtTitle.setText(b.getString("title"));
+            txtAuthor.setText(b.getString("author"));
+            //txtDescription.setText(b.getString("description"));
+        }
     }
 
 

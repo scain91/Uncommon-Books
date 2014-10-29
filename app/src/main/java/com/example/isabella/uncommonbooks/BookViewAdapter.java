@@ -45,7 +45,7 @@ public class BookViewAdapter extends ArrayAdapter<Book> {
             holder = (ViewHolder) convertView.getTag();
 
         holder.txtAuthor.setText(book.getAuthor());
-        holder.txtTitle.setText(book.getName());
+        holder.txtTitle.setText(book.getTitle());
         holder.imageView.setImageResource(book.getImage());
 
         return convertView;
