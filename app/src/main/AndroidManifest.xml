@@ -36,6 +36,11 @@
             android:name=".ListOfListsActivity"
             android:label="@string/search_results_title" >
         </activity>
+        <activity
+            android:name=".ListDetailActivity"
+            android:label="@string/search_results_title" >
+        </activity>
+
     </application>
 
 </manifest>
