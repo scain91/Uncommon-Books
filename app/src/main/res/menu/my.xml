@@ -5,4 +5,9 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/view_lists"
+        android:title="@string/view_lists"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/folder_icon"/>
 </menu>

@@ -1,6 +1,7 @@
 package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,11 @@ public class DetailActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.view_lists){
+            Intent intent = new Intent(this, ListOfListsActivity.class);
+            startActivity(intent);
+            System.out.println("Got past startActivity");
         }
         return super.onOptionsItemSelected(item);
     }
