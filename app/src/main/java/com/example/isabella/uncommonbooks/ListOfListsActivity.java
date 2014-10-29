@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import java.util.Iterator;
 
 import java.util.ArrayList;
 
@@ -40,18 +41,15 @@ public class ListOfListsActivity extends Activity{
         listOfLists.add(new BookList("List C"));
 
         for (int i = 0; i < listOfLists.size(); i++) {
-            Book newBook = new Book("names", "author", 0, "description", 5, 50);
-            Book newBook2 = new Book("names2", "author2", 0, "description", 5, 50);
-            Book newBook3 = new Book("names2", "author2", 0, "description", 5, 50);
+            Book newBook = new Book("name", "author", 0, "description", 5, 50);
+            Book newBook2 = new Book("name2", "author2", 0, "description", 5, 50);
+            Book newBook3 = new Book("name3", "author2", 0, "description", 5, 50);
             listOfLists.get(i).addBook(newBook);
             listOfLists.get(i).addBook(newBook2);
             listOfLists.get(i).addBook(newBook3);
         }
 
 
-//        final BookViewAdapter adapter = new BookViewAdapter(this,
-//                R.layout.list_of_lists, listOfLists);
-//        listview.setAdapter(adapter);
         final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.book_list_item, R.id.list_name, listOfLists);
         listview.setAdapter(adapter);
 
@@ -60,11 +58,12 @@ public class ListOfListsActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-//                Book item = (Book) parent.getItemAtPosition(position);
-//                //make a new activity
-//                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-//                startActivity(intent);
-//                System.out.println("Item Clicked");
+                BookList bookList = (BookList) parent.getItemAtPosition(position);
+                //make a new activity
+                Intent intent = new Intent(view.getContext(), ListDetailActivity.class);
+                intent.putExtra("bookList", bookList);
+                startActivity(intent);
+                System.out.println("Item Clicked");
 
             }
         });

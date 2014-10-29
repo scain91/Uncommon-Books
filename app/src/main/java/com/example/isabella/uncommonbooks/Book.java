@@ -1,6 +1,8 @@
 package com.example.isabella.uncommonbooks;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable{
     public String getTitle() {
         return title;
     }
