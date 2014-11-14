@@ -8,17 +8,52 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.os.AsyncTask;
+//import org.apache.http.HttpResponse;
+import com.google.api.services.books.Books.Volumes.List;
 
+import com.google.api.client.http.HttpResponse;
 import com.google.api.services.books.Books;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.books.BooksRequestInitializer;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.services.books.BooksRequestInitializer;
+import com.google.api.services.books.Books.Volumes.List;
+import com.google.api.services.books.model.Volume;
+import com.google.api.services.books.model.Volumes;
+
+//import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+//import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+//import com.google.api.client.json.jackson2.JacksonFactory;
+
+//import com.google.api.client.http.javanet.NetHttpTransport;
+//import com.google.api.services.tasks.Tasks;
+//import com.google.api.services.tasks.TasksScopes;
+//import java.util.Collections;
+
+import android.util.Log;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class MyActivity extends Activity {
 
-    final String API_KEY = "1A:27:95:F1:1E:58:C2:AC:A3:93:56:1A:45:A2:01:DC:5E:60:BB:AD";
+    //JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+    //final HttpTransport httpTransport = new NetHttpTransport();
+
+    final private String API_KEY = "1A:27:95:F1:1E:58:C2:AC:A3:93:56:1A:45:A2:01:DC:5E:60:BB:AD";
+    final private String API_KEY2 = "AIzaSyCikpgBJg3lz78O9nkEK7LhXMy-wVL9hks";
+    final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+//    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(TasksScopes.TASKS));
+//    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+//    Tasks service = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("").build();
+
+
     private boolean selected_genres[];
 
     @Override
@@ -28,22 +63,48 @@ public class MyActivity extends Activity {
         selected_genres = new boolean[6];
         //Grab genres from Google
         System.out.println("Created");
-        apiAccess();
+        new ApiAccess().execute();
 
 
     }
 
-    protected void apiAccess() {
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        try {
-            final Books books = new Books.Builder(GoogleNetHttpTransport.newTrustedTransport(), jsonFactory, null)
-                    .setApplicationName("")
-                    .setGoogleClientRequestInitializer(new BooksRequestInitializer(API_KEY))
-                    .build();
-            System.out.println("after books");
-        } catch (Exception e) {
-            System.out.println("Caught\n");
+    private class ApiAccess extends AsyncTask<Void, Void, Void> {
+
+        protected Void doInBackground(Void...arg0) {
+
+            try
+            {
+                Log.d("blah", "Before");
+
+                final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+                final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
+                        .setApplicationName("API Project")
+                        .setBooksRequestInitializer(new BooksRequestInitializer(API_KEY2))
+                        .build();
+                Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2+"&country=US");
+                volumesList.setKey(API_KEY2);
+                volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
+                Volumes volumes = volumesList.execute();
+
+                /*
+                HttpClient bookClient = new DefaultHttpClient();
+                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
+                HttpResponse bookResponse = bookClient.execute(bookGet);
+                Log.d("blah", "After");
+                */
+            }
+
+            catch(Exception e)
+
+            {
+                //e.printStackTrace();
+                Log.d("blah", Log.getStackTraceString(e));
+            }
+            return null;
         }
+
+        protected void onProgressUpdate(Void...arg0){}
+        protected void onPostExecute(Void...arg0){}
 
     }
 
@@ -98,5 +159,6 @@ public class MyActivity extends Activity {
         });
         genrePopUp.show();
     }
+
 
 }
