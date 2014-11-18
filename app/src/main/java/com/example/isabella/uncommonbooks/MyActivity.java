@@ -86,42 +86,21 @@ public class MyActivity extends Activity {
             try
             {
                 Log.d("blah", "Before");
-
-                /*
-                String link = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key=\"+API_KEY+\"&country=US";
-
-                InputStream is = null;
-
-
-                int timeoutConnection = 10000;
-                URL url = new URL(link);
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setConnectTimeout(timeoutConnection);
-                con.setReadTimeout(timeoutConnection);
-                con.setRequestProperty("key", API_KEY);
-                if(con.getResponseCode() != HttpURLConnection.HTTP_OK){
-                    publishProgress();
-                }
-                is=con.getInputStream();
-                */
-
                 final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
                 final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
                         .setApplicationName("API Project")
                         .setBooksRequestInitializer(new BooksRequestInitializer(BROWSER_KEY))
                         .build();
-                //Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2+"&country=US");
-                Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key="+BROWSER_KEY+"&country=US");
+                Books.Volumes.List volumesList = books.volumes().list("isbn:9780473185459");
                 volumesList.setKey(BROWSER_KEY);
-                //volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
-                volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key="+BROWSER_KEY+"&country=US");
-                Log.d("blah", "before execute");
+                Log.d("blah", "before executelk");
                 Volumes volumes = volumesList.execute();
+                Log.d("blah", volumes.toPrettyString());
 
                 /*
                 HttpClient bookClient = new DefaultHttpClient();
                 //HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY+"&country=US");
-                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY+"&country=US");
+                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+BROWSER_KEY+"&country=US");
                 HttpResponse bookResponse = bookClient.execute(bookGet);
                 HttpEntity bookEntity = bookResponse.getEntity();
                 InputStream bookContent = bookEntity.getContent();
