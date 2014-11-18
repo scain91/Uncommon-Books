@@ -91,11 +91,16 @@ public class MyActivity extends Activity {
                         .setApplicationName("API Project")
                         .setBooksRequestInitializer(new BooksRequestInitializer(BROWSER_KEY))
                         .build();
-                Books.Volumes.List volumesList = books.volumes().list("isbn:9780473185459");
+                Books.Volumes.List volumesList = books.volumes().list("inauthor:Twain");
                 volumesList.setKey(BROWSER_KEY);
                 Log.d("blah", "before executelk");
                 Volumes volumes = volumesList.execute();
-                Log.d("blah", volumes.toPrettyString());
+                //Log.d("blah", volumes.toPrettyString());
+                for(Volume volume: volumes.getItems()){
+                    Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+                    Log.d("blah", volumeInfo.getTitle());
+                    Log.d("blah", volumeInfo.getAuthors().toString());
+                }
 
                 /*
                 HttpClient bookClient = new DefaultHttpClient();
