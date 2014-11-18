@@ -9,10 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.os.AsyncTask;
-//import org.apache.http.HttpResponse;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import com.google.api.services.books.Books.Volumes.List;
 
-import com.google.api.client.http.HttpResponse;
+//import com.google.api.client.http.HttpResponse;
 import com.google.api.services.books.Books;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.books.BooksRequestInitializer;
@@ -40,14 +42,23 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MyActivity extends Activity {
 
     //JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
     //final HttpTransport httpTransport = new NetHttpTransport();
 
-    final private String API_KEY = "1A:27:95:F1:1E:58:C2:AC:A3:93:56:1A:45:A2:01:DC:5E:60:BB:AD";
-    final private String API_KEY2 = "AIzaSyCikpgBJg3lz78O9nkEK7LhXMy-wVL9hks";
+    //final private String OLD_API_KEY = "AIzaSyCikpgBJg3lz78O9nkEK7LhXMy-wVL9hks";
+    final private String BROWSER_KEY = "AIzaSyDdWvHTQs0Fk2MVRoo5_NCQHYcfu2C5E2o";
+    //final private String ANDROID_KEY = "AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8";
+    //final private String ANDROID_KEY2 = "AIzaSyDm7Z0DbQ8_Yy4crGyBfSwqcjfoFVhLk_c";
+
     final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
 //    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(TasksScopes.TASKS));
 //    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -76,22 +87,54 @@ public class MyActivity extends Activity {
             {
                 Log.d("blah", "Before");
 
+                /*
+                String link = "https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key=\"+API_KEY+\"&country=US";
+
+                InputStream is = null;
+
+
+                int timeoutConnection = 10000;
+                URL url = new URL(link);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setConnectTimeout(timeoutConnection);
+                con.setReadTimeout(timeoutConnection);
+                con.setRequestProperty("key", API_KEY);
+                if(con.getResponseCode() != HttpURLConnection.HTTP_OK){
+                    publishProgress();
+                }
+                is=con.getInputStream();
+                */
+
                 final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
                 final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
                         .setApplicationName("API Project")
-                        .setBooksRequestInitializer(new BooksRequestInitializer(API_KEY2))
+                        .setBooksRequestInitializer(new BooksRequestInitializer(BROWSER_KEY))
                         .build();
-                Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2+"&country=US");
-                volumesList.setKey(API_KEY2);
-                volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
+                //Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2+"&country=US");
+                Books.Volumes.List volumesList = books.volumes().list("https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key="+BROWSER_KEY+"&country=US");
+                volumesList.setKey(BROWSER_KEY);
+                //volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
+                volumesList.setQ("https://www.googleapis.com/books/v1/volumes?q=inauthor:Twain&key="+BROWSER_KEY+"&country=US");
+                Log.d("blah", "before execute");
                 Volumes volumes = volumesList.execute();
 
                 /*
                 HttpClient bookClient = new DefaultHttpClient();
-                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY2);
+                //HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY+"&country=US");
+                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY+"&country=US");
                 HttpResponse bookResponse = bookClient.execute(bookGet);
-                Log.d("blah", "After");
+                HttpEntity bookEntity = bookResponse.getEntity();
+                InputStream bookContent = bookEntity.getContent();
+                InputStreamReader bookInput = new InputStreamReader(bookContent);
+                BufferedReader bookReader = new BufferedReader(bookInput);
+                String lineIn;
+                while ((lineIn=bookReader.readLine())!=null) {
+                    Log.d("blah", lineIn);
+                }
+                Log.d("blah", bookContent.toString());
                 */
+                Log.d("blah", "After");
+
             }
 
             catch(Exception e)

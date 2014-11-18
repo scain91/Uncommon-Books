@@ -94,6 +94,7 @@
     <orderEntry type="library" exported="" name="google-http-client-jdo-1.19.0" level="project" />
     <orderEntry type="library" exported="" name="protobuf-java-2.4.1" level="project" />
     <orderEntry type="library" exported="" name="gson-2.1" level="project" />
+    <orderEntry type="library" exported="" name="play-services-6.1.71" level="project" />
   </component>
 </module>
 

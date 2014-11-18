@@ -80,6 +80,12 @@
         revision="19.1.0"
         sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd"/>
     <item
+        dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\classes-2e686039ad2775cd5d5b8fade2de8c1ddf0d0729.jar"
+        jar="C:\Users\Isabella\UncommonBooks\app\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da"/>
+    <item
         dex="C:\Users\Isabella\UncommonBooks\app\build\intermediates\pre-dexed\debug\google-api-client-1.19.0-9199ce9cbbc70686330614e65b043bd4e895f7fa.jar"
         jar="C:\Users\Isabella\UncommonBooks\app\libs\google-api-client-1.19.0.jar"
         jumboMode="false"
