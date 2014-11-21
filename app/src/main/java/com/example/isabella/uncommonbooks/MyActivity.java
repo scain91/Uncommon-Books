@@ -28,42 +28,16 @@ import com.google.api.services.books.model.Volumes;
 
 //import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
-//import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-//import com.google.api.client.json.jackson2.JacksonFactory;
-
-//import com.google.api.client.http.javanet.NetHttpTransport;
-//import com.google.api.services.tasks.Tasks;
-//import com.google.api.services.tasks.TasksScopes;
-//import java.util.Collections;
-
 import android.util.Log;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 
 public class MyActivity extends Activity {
 
-    //JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-    //final HttpTransport httpTransport = new NetHttpTransport();
-
-    //final private String OLD_API_KEY = "AIzaSyCikpgBJg3lz78O9nkEK7LhXMy-wVL9hks";
-    final private String BROWSER_KEY = "AIzaSyDdWvHTQs0Fk2MVRoo5_NCQHYcfu2C5E2o";
-    //final private String ANDROID_KEY = "AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8";
-    //final private String ANDROID_KEY2 = "AIzaSyDm7Z0DbQ8_Yy4crGyBfSwqcjfoFVhLk_c";
-
-    final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
-//    GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(TasksScopes.TASKS));
-//    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-//    Tasks service = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("").build();
-
+    final private String ANDROID_KEY = "AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8";
 
     private boolean selected_genres[];
 
@@ -89,34 +63,18 @@ public class MyActivity extends Activity {
                 final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
                 final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
                         .setApplicationName("API Project")
-                        .setBooksRequestInitializer(new BooksRequestInitializer(BROWSER_KEY))
+                        .setBooksRequestInitializer(new BooksRequestInitializer(ANDROID_KEY))
                         .build();
-                Books.Volumes.List volumesList = books.volumes().list("inauthor:Twain");
-                volumesList.setKey(BROWSER_KEY);
+                Books.Volumes.List volumesList = books.volumes().list("Blue");
                 Log.d("blah", "before executelk");
                 Volumes volumes = volumesList.execute();
-                //Log.d("blah", volumes.toPrettyString());
+                Log.d("blah", volumes.toPrettyString());
+                Log.d("blah", "Items: "+volumes.getTotalItems().toString());
                 for(Volume volume: volumes.getItems()){
                     Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
                     Log.d("blah", volumeInfo.getTitle());
                     Log.d("blah", volumeInfo.getAuthors().toString());
                 }
-
-                /*
-                HttpClient bookClient = new DefaultHttpClient();
-                //HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+API_KEY+"&country=US");
-                HttpGet bookGet = new HttpGet("https://www.googleapis.com/books/v1/volumes?q=isbn:9780473185459&key="+BROWSER_KEY+"&country=US");
-                HttpResponse bookResponse = bookClient.execute(bookGet);
-                HttpEntity bookEntity = bookResponse.getEntity();
-                InputStream bookContent = bookEntity.getContent();
-                InputStreamReader bookInput = new InputStreamReader(bookContent);
-                BufferedReader bookReader = new BufferedReader(bookInput);
-                String lineIn;
-                while ((lineIn=bookReader.readLine())!=null) {
-                    Log.d("blah", lineIn);
-                }
-                Log.d("blah", bookContent.toString());
-                */
                 Log.d("blah", "After");
 
             }
@@ -124,7 +82,6 @@ public class MyActivity extends Activity {
             catch(Exception e)
 
             {
-                //e.printStackTrace();
                 Log.d("blah", Log.getStackTraceString(e));
             }
             return null;
