@@ -147,8 +147,8 @@ public class SearchResultsActivity extends Activity {
 
                             //setting up smaller image
                             String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
-                            Log.d("blah", "thumb = " + thumbString);
                             URL thumbUrl = new URL(thumbString);
+                            Log.d("blah", "thumb = " + thumbString);
                             tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());
                         }
                         catch(MalformedURLException e){
