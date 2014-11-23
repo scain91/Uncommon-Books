@@ -1,5 +1,7 @@
 package com.example.isabella.uncommonbooks;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class Book implements Serializable{
@@ -11,9 +13,11 @@ public class Book implements Serializable{
         return author;
     }
 
-    public int getImage() {
+    public Bitmap getImage() {
         return image;
     }
+
+    public Bitmap getThumbnail(){ return thumbnail; }
 
     public String getDescription() {
         return description;
@@ -26,15 +30,16 @@ public class Book implements Serializable{
     public int getNumRatings() {
         return numRatings;
     }
-
     private String title, author, description;
+    private Bitmap image, thumbnail;
     private double rating;
-    private int numRatings, image;
+    private int numRatings;
 
-    public Book(String title, String author, int image, String d, double r, int nR){
+    public Book(String title, String author, Bitmap image, Bitmap thumbnail, String d, double r, int nR){
         this.title = title;
         this.author = author;
         this.image = image;
+        this.thumbnail = thumbnail;
         description = d;
         rating = r;
         numRatings = nR;

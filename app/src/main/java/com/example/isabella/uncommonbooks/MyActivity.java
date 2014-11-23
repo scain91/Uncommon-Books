@@ -29,15 +29,10 @@ import com.google.api.services.books.model.Volumes;
 //import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import android.util.Log;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import java.util.ArrayList;
 
 
 public class MyActivity extends Activity {
-
-    final private String ANDROID_KEY = "AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8";
 
     private boolean selected_genres[];
 
@@ -45,54 +40,10 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+        //Grab genres from Google and set the size of selected_genres to the number we find
         selected_genres = new boolean[6];
-        //Grab genres from Google
         System.out.println("Created");
-        new ApiAccess().execute();
-
-
     }
-
-    private class ApiAccess extends AsyncTask<Void, Void, Void> {
-
-        protected Void doInBackground(Void...arg0) {
-
-            try
-            {
-                Log.d("blah", "Before");
-                final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-                final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
-                        .setApplicationName("API Project")
-                        .setBooksRequestInitializer(new BooksRequestInitializer(ANDROID_KEY))
-                        .build();
-                Books.Volumes.List volumesList = books.volumes().list("Blue");
-                Log.d("blah", "before executelk");
-                Volumes volumes = volumesList.execute();
-                Log.d("blah", volumes.toPrettyString());
-                Log.d("blah", "Items: "+volumes.getTotalItems().toString());
-                for(Volume volume: volumes.getItems()){
-                    Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-                    Log.d("blah", volumeInfo.getTitle());
-                    Log.d("blah", volumeInfo.getAuthors().toString());
-                }
-                Log.d("blah", "After");
-
-            }
-
-            catch(Exception e)
-
-            {
-                Log.d("blah", Log.getStackTraceString(e));
-            }
-            return null;
-        }
-
-        protected void onProgressUpdate(Void...arg0){}
-        protected void onPostExecute(Void...arg0){}
-
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,9 +53,6 @@ public class MyActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;

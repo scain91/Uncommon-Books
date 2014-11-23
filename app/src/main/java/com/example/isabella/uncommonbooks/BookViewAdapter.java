@@ -2,6 +2,10 @@ package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class BookViewAdapter extends ArrayAdapter<Book> {
@@ -46,7 +53,12 @@ public class BookViewAdapter extends ArrayAdapter<Book> {
 
         holder.txtAuthor.setText(book.getAuthor());
         holder.txtTitle.setText(book.getTitle());
-        holder.imageView.setImageResource(book.getImage());
+
+        //Trying to make image loading an asynchronous task
+        //new DownloadImageTask(holder.imageView).execute(book.getImage());
+
+
+        holder.imageView.setImageBitmap(book.getImage());
 
         return convertView;
     }

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,10 +34,16 @@ public class DetailActivity extends Activity {
             Bundle b = getIntent().getExtras();
             TextView txtTitle = (TextView) findViewById(R.id.title_book);
             TextView txtAuthor = (TextView) findViewById(R.id.author_book);
-            //TextView txtDescription = (TextView) findViewById(R.id.description_book);
+            TextView txtDescription = (TextView) findViewById(R.id.description_book);
+            ImageView img = (ImageView) findViewById(R.id.image_book);
             txtTitle.setText(b.getString("title"));
             txtAuthor.setText(b.getString("author"));
-            //txtDescription.setText(b.getString("description"));
+            txtDescription.setText(b.getString("description"));
+
+            //Currently works
+            img.setImageBitmap((Bitmap) b.getParcelable("image"));
+            //Trying to make image loading an asynchronous task
+            //new DownloadImageTask(img).execute(b.getString("image"));
         }
     }
 

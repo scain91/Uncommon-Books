@@ -41,9 +41,9 @@ public class ListOfListsActivity extends Activity{
         listOfLists.add(new BookList("List C"));
 
         for (int i = 0; i < listOfLists.size(); i++) {
-            Book newBook = new Book("name", "author", 0, "description", 5, 50);
-            Book newBook2 = new Book("name2", "author2", 0, "description", 5, 50);
-            Book newBook3 = new Book("name3", "author2", 0, "description", 5, 50);
+            Book newBook = new Book("name", "author", null, null, "description", 5, 50);
+            Book newBook2 = new Book("name2", "author2", null, null, "description", 5, 50);
+            Book newBook3 = new Book("name3", "author2", null, null, "description", 5, 50);
             listOfLists.get(i).addBook(newBook);
             listOfLists.get(i).addBook(newBook2);
             listOfLists.get(i).addBook(newBook3);
