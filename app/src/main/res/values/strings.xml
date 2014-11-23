@@ -17,6 +17,7 @@
     <string name="list_of_lists_title">All Book Lists</string>
     <string name="view_lists">View My Lists</string>
     <string name="choose_list">Choose List:</string>
+    <string name="ANDROID_KEY">AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8</string>
 
     <string-array name="genre_list">
         <item>Fantasy</item>

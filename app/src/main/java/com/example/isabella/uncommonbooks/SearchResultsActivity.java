@@ -30,7 +30,6 @@ import java.util.List;
 
 public class SearchResultsActivity extends Activity {
 
-    final private String ANDROID_KEY = "AIzaSyBEqI9HdDpSoxszElDQJ16DgBmc8aRzYu8";
     public ArrayList<Book> book_list;
     BookViewAdapter adapter;
 
@@ -102,7 +101,7 @@ public class SearchResultsActivity extends Activity {
                 final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
                 final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
                         .setApplicationName("API Project")
-                        .setBooksRequestInitializer(new BooksRequestInitializer(ANDROID_KEY))
+                        .setBooksRequestInitializer(new BooksRequestInitializer(getString(R.string.ANDROID_KEY)))
                         .build();
 
 

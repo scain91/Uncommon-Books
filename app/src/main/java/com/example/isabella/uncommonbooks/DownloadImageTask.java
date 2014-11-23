@@ -13,6 +13,7 @@ import java.net.URL;
  * Created by Basil on 11/23/2014.
  * Heavy references to http://stackoverflow.com/questions/5776851/load-image-from-url
  */
+/*
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
     ImageView bmImage;
 
@@ -44,3 +45,4 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
         }
     }
 }
+*/

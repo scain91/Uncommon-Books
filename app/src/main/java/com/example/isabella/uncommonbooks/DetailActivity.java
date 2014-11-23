@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class DetailActivity extends Activity {
 
-    final String API_KEY = "1A:27:95:F1:1E:58:C2:AC:A3:93:56:1A:45:A2:01:DC:5E:60:BB:AD";
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
