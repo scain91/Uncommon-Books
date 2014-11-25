@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.JsonFactory;
@@ -42,7 +43,6 @@ public class SearchResultsActivity extends Activity {
         Log.d("blah", "search received: " + s);
         ApiAccess api = new ApiAccess();
         api.execute(s);
-
 //        setContentView(R.layout.activity_search_results);
 //        ListView listview = (ListView) findViewById(R.id.results_listview);
 //

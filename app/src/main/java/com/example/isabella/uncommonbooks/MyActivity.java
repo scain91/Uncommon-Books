@@ -30,6 +30,7 @@ import com.google.api.services.books.model.Volumes;
 
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -75,13 +76,18 @@ public class MyActivity extends Activity {
     }
 
     public void search_button_listener(View v) {
-        Intent intent = new Intent(this, SearchResultsActivity.class);
         EditText et = (EditText) findViewById(R.id.keywords);
-        String s = et.getText().toString();
-        Log.d("blah", "searching for " + s);
-        intent.putExtra("search", s);
-        startActivity(intent);
-        System.out.println("In button listener");
+        if(et != null && et.getText().toString() != null && !et.getText().toString().equals("")){
+            String s = et.getText().toString();
+            Intent intent = new Intent(this, SearchResultsActivity.class);
+            Log.d("blah", "searching for " + s);
+            intent.putExtra("search", s);
+            startActivity(intent);
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(), "Please enter search terms!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public void genre_button_listener(View v) {
