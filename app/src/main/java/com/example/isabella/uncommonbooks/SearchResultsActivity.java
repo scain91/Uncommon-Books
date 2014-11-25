@@ -36,10 +36,12 @@ public class SearchResultsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //API calls here//
         setContentView(R.layout.activity_search_results);
+        //API calls here//
+        String s = this.getIntent().getStringExtra("search");
+        Log.d("blah", "search received: " + s);
         ApiAccess api = new ApiAccess();
-        api.execute();
+        api.execute(s);
 
 //        setContentView(R.layout.activity_search_results);
 //        ListView listview = (ListView) findViewById(R.id.results_listview);
@@ -92,9 +94,9 @@ public class SearchResultsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class ApiAccess extends AsyncTask<Void, Void, Void> {
+    private class ApiAccess extends AsyncTask<String, Void, Void> {
         @Override
-        protected Void doInBackground(Void...arg0) {
+        protected Void doInBackground(String...arg0) {
             try
             {
                 Log.d("blah", "Just entered doInBackground of ApiAccess");
@@ -108,7 +110,7 @@ public class SearchResultsActivity extends Activity {
                 /* TODO: base search terms on input rather than constant
                  * TODO: implement heuristic for uncommon books
                  */
-                Books.Volumes.List volumesList = books.volumes().list("Blue");
+                Books.Volumes.List volumesList = books.volumes().list(arg0[0]);
                 Log.d("blah", "before execute");
                 Volumes volumes = volumesList.execute();
 

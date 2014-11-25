@@ -29,6 +29,8 @@ import com.google.api.services.books.model.Volumes;
 //import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import android.util.Log;
+import android.widget.EditText;
+
 import java.util.ArrayList;
 
 
@@ -74,6 +76,10 @@ public class MyActivity extends Activity {
 
     public void search_button_listener(View v) {
         Intent intent = new Intent(this, SearchResultsActivity.class);
+        EditText et = (EditText) findViewById(R.id.keywords);
+        String s = et.getText().toString();
+        Log.d("blah", "searching for " + s);
+        intent.putExtra("search", s);
         startActivity(intent);
         System.out.println("In button listener");
     }
