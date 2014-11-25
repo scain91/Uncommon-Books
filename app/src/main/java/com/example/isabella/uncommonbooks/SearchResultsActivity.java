@@ -1,11 +1,13 @@
 package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,42 +33,24 @@ import java.util.List;
 
 public class SearchResultsActivity extends Activity {
 
-    public ArrayList<Book> book_list;
-    BookViewAdapter adapter;
+    protected ArrayList<Book> book_list;
+    protected Dialog mSplashDialog;
+    protected BookViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_results);
-        //API calls here//
+
+        //get input string
         String s = this.getIntent().getStringExtra("search");
         Log.d("blah", "search received: " + s);
+        showSplashScreen();
+
+        //API calls here//
+        setContentView(R.layout.activity_search_results);
         ApiAccess api = new ApiAccess();
         api.execute(s);
-//        setContentView(R.layout.activity_search_results);
-//        ListView listview = (ListView) findViewById(R.id.results_listview);
-//
-//        adapter = new BookViewAdapter(this,
-//                R.layout.search_result_item, book_list);
-//        listview.setAdapter(adapter);
-//
-//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, final View view,
-//                                    int position, long id) {
-//                Book book = (Book) parent.getItemAtPosition(position);
-//                //make a new activity
-//                Intent intent = new Intent(view.getContext(), DetailActivity.class);
-//                Bundle b = new Bundle();
-//
-//                //Now change this to use all of the books actual attributes
-//                b.putString("title", book.getTitle());
-//                b.putString("author", book.getAuthor());
-//                intent.putExtras(b);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -179,6 +163,7 @@ public class SearchResultsActivity extends Activity {
         @Override
         protected void onPostExecute(Void a){
             Log.d("blah", "entered onPostExecute");
+            removeSplashScreen();
             ListView listview = (ListView) findViewById(R.id.results_listview);
             adapter = new BookViewAdapter(getApplicationContext(), R.layout.search_result_item, book_list);
             listview.setAdapter(adapter);
@@ -202,6 +187,36 @@ public class SearchResultsActivity extends Activity {
                 }
             });
             Log.d("blah", "exited onPostExecute");
+        }
+    }
+
+
+    /**
+     * Shows the splash screen over the full Activity
+     */
+    protected void showSplashScreen() {
+        mSplashDialog = new Dialog(this);
+        mSplashDialog.setContentView(R.layout.loading_screen);
+        mSplashDialog.setCancelable(false);
+        mSplashDialog.show();
+
+        // Set Runnable to remove splash screen just in case
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                removeSplashScreen();
+            }
+        }, 3000);
+    }
+
+    /**
+     * Removes the Dialog that displays the splash screen
+     */
+    protected void removeSplashScreen() {
+        if (mSplashDialog != null) {
+            mSplashDialog.dismiss();
+            mSplashDialog = null;
         }
     }
 }
