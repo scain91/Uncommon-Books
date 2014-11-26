@@ -110,7 +110,7 @@ public class SearchResultsActivity extends Activity {
                        // Log.d("blah", volumeInfo.getAuthors().toString());
                         String title = volumeInfo.getTitle() != null ?
                                 volumeInfo.getTitle() : "title missing";
-                        String author = volumeInfo.getAuthors().toString() != null ?
+                        String author = volumeInfo.getAuthors() != null ?
                                 volumeInfo.getAuthors().toString() : "authors missing";
                         //removing brackets
                         author = author.substring(1, author.length() - 1);
