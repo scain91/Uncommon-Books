@@ -1,22 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/new_list_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addNewList"
+            android:text="New List" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/res"
+        android:id="@+id/all_lists_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/list_of_lists_title"
-        android:textSize="50sp" />
+        android:textSize="30sp" />
+
     <ListView
         android:id="@+id/list_of_lists_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_above="@id/new_list_button"
+        android:layout_below="@id/all_lists_title" />
+</RelativeLayout>

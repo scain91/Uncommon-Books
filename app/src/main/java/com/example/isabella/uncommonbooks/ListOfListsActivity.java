@@ -1,5 +1,9 @@
 package com.example.isabella.uncommonbooks;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
@@ -9,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+
 import java.util.Iterator;
 
 import java.util.ArrayList;
@@ -18,39 +25,18 @@ import java.util.ArrayList;
 /**
  * Created by Isabella on 10/28/2014.
  */
-public class ListOfListsActivity extends Activity{
-
-
+public class ListOfListsActivity extends Activity {
+    protected static boolean active = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_lists);
 
+        active = true;
         ListView listview = (ListView) findViewById(R.id.list_of_lists_view);
-//        String[] values = new String[]{"Android", "iPhone", "WindowsMobile",
-//                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-//                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-//                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-//                "Android", "iPhone", "WindowsMobile"};
-
-
-        final ArrayList<BookList> listOfLists = new ArrayList<BookList>();
-        listOfLists.add(new BookList("List A"));
-        listOfLists.add(new BookList("List B"));
-        listOfLists.add(new BookList("List C"));
-
-        for (int i = 0; i < listOfLists.size(); i++) {
-            Book newBook = new Book("name", "author", null, null, "description", 5, 50);
-            Book newBook2 = new Book("name2", "author2", null, null, "description", 5, 50);
-            Book newBook3 = new Book("name3", "author2", null, null, "description", 5, 50);
-            listOfLists.get(i).addBook(newBook);
-            listOfLists.get(i).addBook(newBook2);
-            listOfLists.get(i).addBook(newBook3);
-        }
-
-
-        final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.book_list_item, R.id.list_name, listOfLists);
+        final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.book_list_item,
+                R.id.list_name, MyActivity.myLists);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,43 +47,47 @@ public class ListOfListsActivity extends Activity{
                 BookList bookList = (BookList) parent.getItemAtPosition(position);
                 //make a new activity
                 Intent intent = new Intent(view.getContext(), ListDetailActivity.class);
-                intent.putExtra("bookList", bookList);
+                Bundle b = new Bundle();
+                b.putInt("book list index", position);
+                intent.putExtras(b);
                 startActivity(intent);
                 System.out.println("Item Clicked");
-
             }
         });
     }
 
+    public void addNewList(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
 
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return true;
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MyActivity.myLists.add(new BookList(input.getText().toString()));
+                ListView listview = (ListView) findViewById(R.id.list_of_lists_view);
+                final ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
+                        R.layout.book_list_item, R.id.list_name, MyActivity.myLists);
+                listview.setAdapter(adapter);
+                Log.d("blah", "new_name set to " + input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setTitle("New book list");
+        builder.show();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-
-        }
-        else if(id == R.id.view_lists){
-            Intent intent = new Intent(this, ListOfListsActivity.class);
-            startActivity(intent);
-            System.out.println("Got past startActivity");
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onStop() {
+        super.onStop();
+        active = false;
     }
-
-
 }
-
-

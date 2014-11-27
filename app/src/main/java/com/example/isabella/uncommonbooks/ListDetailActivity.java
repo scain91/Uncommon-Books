@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.widget.TextView;
 
-/**
- * Created by Isabella on 10/28/2014.
- */
 public class ListDetailActivity extends Activity{
+
+    private BookList bookList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +20,11 @@ public class ListDetailActivity extends Activity{
         setContentView(R.layout.book_list);
 
         ListView listview = (ListView) findViewById(R.id.results_listview);
-
-        Intent i = getIntent();
-        BookList bookList = (BookList) i.getSerializableExtra("bookList");
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            bookList = MyActivity.myLists.get(getIntent().getExtras().getInt("book list index"));
+        }
         TextView list_title = (TextView) findViewById(R.id.book_list_title);
         list_title.setText(bookList.getName());
-
 
         final BookViewAdapter adapter = new BookViewAdapter(this,
                 R.layout.search_result_item, bookList.getBooks());
@@ -44,6 +42,10 @@ public class ListDetailActivity extends Activity{
 
                 b.putString("title", book.getTitle());
                 b.putString("author", book.getAuthor());
+                b.putString("description", book.getDescription());
+                b.putParcelable("image", book.getImage());
+                b.putDouble("ratings", book.getRating());
+                b.putInt("num_ratings", book.getNumRatings());
                 intent.putExtras(b);
                 startActivity(intent);
             }
