@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 
 
@@ -41,8 +42,14 @@ public class DetailActivity extends Activity {
             txtTitle.setText(book.getTitle());
             txtAuthor.setText(book.getAuthor());
             txtDescription.setText(book.getDescription());
-            //Currently works
             img.setImageBitmap(book.getImage());
+            //Currently works
+
+            img.setImageBitmap((Bitmap) b.getParcelable("image"));
+            //Trying to make image loading an asynchronous task
+            //new DownloadImageTask(img).execute(b.getString("image"));
+
+
         }
     }
 

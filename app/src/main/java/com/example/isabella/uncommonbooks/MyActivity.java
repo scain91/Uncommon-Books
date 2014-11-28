@@ -3,6 +3,8 @@ package com.example.isabella.uncommonbooks;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,15 +33,24 @@ import com.google.api.services.books.model.Volumes;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MyActivity extends Activity {
 
     private boolean selected_genres[];
     public static ArrayList<BookList> myLists;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +90,11 @@ public class MyActivity extends Activity {
     }
 
     public void random_button_listener(View v) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        startActivity(intent);
+        RandomApiAccess r = new RandomApiAccess();
+        //r.execute("9780375753770");
+        r.execute();
+//        Intent intent = new Intent(this, DetailActivity.class);
+//        startActivity(intent);
         System.out.println("In button listener");
     }
 
@@ -118,5 +132,129 @@ public class MyActivity extends Activity {
         genrePopUp.show();
     }
 
+    public class RandomApiAccess extends AsyncTask<Void, Void, Void> {
+
+        ArrayList<Book> book_list = new ArrayList<Book>();
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                Log.d("blah", "Just entered doInBackground of ApiAccess");
+
+                final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+                final Books books = new Books.Builder(AndroidHttp.newCompatibleTransport(), jsonFactory, null)
+                        .setApplicationName("API Project")
+                        .setBooksRequestInitializer(new BooksRequestInitializer(getString(R.string.ANDROID_KEY)))
+                        .build();
+
+                /* TODO: base search terms on input rather than constant
+                 * TODO: implement heuristic for uncommon books
+                 */
+
+
+                int num_books = 0;
+
+
+                //2 is the number of random books to load at a time; we can change it later
+                while(num_books < 2){
+                    try{
+
+                            Book b = getValidRandom(books);
+                            //if max tries not exceeded. TODO: handle this error
+                            if(b != null) {
+                                num_books++;
+                                book_list.add(b);
+                            }
+                        }
+                        catch(MalformedURLException e){
+                            Log.d("Error: ", "bad URL");
+                        }
+                        catch(IOException e){
+                            Log.d("Error: ", "IOException using bitmap");
+                        }
+
+                }
+              Log.d("blah", "all books added to list");
+
+            } catch (Exception e) {
+                Log.d("blah", Log.getStackTraceString(e));
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... arg0) {
+            Log.d("blah", "entered onProgressUpdate");
+        }
+
+        @Override
+        protected void onPostExecute(Void a) {
+
+            Log.d("blah", "entered onPostExecute");
+            Book book_using = book_list.get(0);
+            Intent intent = new Intent(MyActivity.this, DetailActivity.class);
+            Bundle b = new Bundle();
+            b.putString("title", book_using.getTitle());
+            b.putString("author", book_using.getAuthor());
+            b.putString("description", book_using.getDescription());
+            b.putParcelable("image", book_using.getImage());
+            b.putParcelable("thumbnail", book_using.getThumbnail());
+            intent.putExtras(b);
+            startActivity(intent);
+            Log.d("blah", "exited onPostExecute");
+
+
+        }
+    }
+    //at some point, make it stop!
+    public Book getValidRandom(Books books)throws IOException{
+            Log.d("blah", "entered");
+            Random r = new Random();
+            Bitmap ibmp = null;  //make this a default image in future
+            Bitmap tbmp = null; //thumbnail bitmap
+            String[] randomWords = getResources().getStringArray(R.array.random_query_words);
+            int max_index = randomWords.length - 1;
+            int api_calls = 0;
+            int max_calls = 3;
+            while(api_calls < max_calls) {
+                Books.Volumes.List volume_request = books.volumes().list(randomWords[r.nextInt(max_index)]);
+                Volumes volumes = volume_request.execute();
+                if(volumes != null && volumes.getTotalItems() > 0){
+                    for(Volume volume: volumes.getItems()) {
+                        Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+                        if (volumeInfo == null || volumeInfo.getTitle() == null ||
+                                volumeInfo.getDescription() == null ||
+                                volumeInfo.getAverageRating() == null || volumeInfo.getRatingsCount() == null
+                                || volumeInfo.getImageLinks() == null || volumeInfo.getImageLinks().getThumbnail() == null
+                                || volumeInfo.getImageLinks().getSmallThumbnail() == null) {
+                            Log.d("blah", "Continuing");
+                        } else {
+                            String author = volumeInfo.getAuthors() != null ?
+                                    volumeInfo.getAuthors().toString() : "authors missing";
+                            //removing brackets
+                            author = author.substring(1, author.length() - 1);
+                            //setting up large image
+                            String imageString = volumeInfo.getImageLinks().getThumbnail();
+                            URL imgUrl = new URL(imageString);
+                            ibmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                            //setting up smaller image
+                            String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
+                            URL thumbUrl = new URL(thumbString);
+                            tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());
+                            Log.d("blah", "Num Tries:" + String.valueOf(api_calls));
+                            Log.d("blah", volumeInfo.getTitle());
+                            Book b = new Book(volumeInfo.getTitle(), author, ibmp, tbmp, volumeInfo.getDescription(), volumeInfo.getAverageRating(), volumeInfo.getRatingsCount());
+                            return b;
+                        }
+                    }
+
+                }
+                Log.d("blah", "adding after continuing");
+                api_calls++;
+
+            }
+            return null;
+
+    }
 
 }
