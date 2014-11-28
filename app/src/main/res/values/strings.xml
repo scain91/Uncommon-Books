@@ -27,6 +27,12 @@
         <item>Autobiography</item>
         <item>Children</item>
     </string-array>
+
+    <string-array name="random_query_words">
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Bird</item>
+    </string-array>
     <string name="hello_world">Hello world!</string>
     <string name="search_results_title">Uncommon Books</string>
     <string name="add_book">Add book to list</string>

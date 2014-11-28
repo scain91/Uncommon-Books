@@ -78,6 +78,7 @@ public class SearchResultsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private class ApiAccess extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String...arg0) {

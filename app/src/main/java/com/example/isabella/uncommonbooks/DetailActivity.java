@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 
 
@@ -42,6 +43,7 @@ public class DetailActivity extends Activity {
             img.setImageBitmap((Bitmap) b.getParcelable("image"));
             //Trying to make image loading an asynchronous task
             //new DownloadImageTask(img).execute(b.getString("image"));
+
         }
     }
 
