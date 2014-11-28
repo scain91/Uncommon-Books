@@ -36,15 +36,22 @@ public class SearchResultsActivity extends Activity {
     protected ArrayList<Book> book_list;
     protected Dialog mSplashDialog;
     protected BookViewAdapter adapter;
+    protected boolean freeEBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        freeEBooks = false;
         //get input string
-        String s = this.getIntent().getStringExtra("search");
+        String s = "";
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            Bundle b = getIntent().getExtras();
+            s = b.getString("search");
+            freeEBooks = b.getBoolean("ebooks");
+        }
         Log.d("blah", "search received: " + s);
+        Log.d("blah", "ebooks only? " + freeEBooks);
         showSplashScreen();
 
         //API calls here//
@@ -90,10 +97,19 @@ public class SearchResultsActivity extends Activity {
                         .build();
 
 
-                /* TODO: base search terms on input rather than constant
-                 * TODO: implement heuristic for uncommon books
+                /* TODO: implement heuristic for uncommon books
                  */
                 Books.Volumes.List volumesList = books.volumes().list(arg0[0]);
+                /*This is where we can change the results of the search
+                  Example:
+                    volumesList.setMaxResults((long) 1);
+                    changes the search to only retrieve 1 book
+
+                  All methods can be found at
+                    https://developers.google.com/resources/api-libraries/documentation/books/v1/java/latest/
+                */
+                if(freeEBooks)
+                    volumesList.setFilter("free-ebooks");
                 Log.d("blah", "before execute");
                 Volumes volumes = volumesList.execute();
 
@@ -131,7 +147,7 @@ public class SearchResultsActivity extends Activity {
                                     Log.d("blah", "img = " + imageString);
                                     img_bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
                                 }
-                                //setting up smaller image
+                                //setting up thumbnail image
                                 /*String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
                                 URL thumbUrl = new URL(thumbString);
                                 Log.d("blah", "thumb = " + thumbString);

@@ -29,6 +29,7 @@ import com.google.api.services.books.model.Volumes;
 //import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         if(true) {    //savedInstanceState == null
             myLists = new ArrayList<BookList>();
+            myLists.add(new BookList("Example 1"));
+            myLists.add(new BookList("Example 2"));
         }
         else {
             //figure out how to save myLists
@@ -83,11 +86,16 @@ public class MyActivity extends Activity {
 
     public void search_button_listener(View v) {
         EditText et = (EditText) findViewById(R.id.keywords);
+        CheckBox cb = (CheckBox) findViewById(R.id.checkbox_free_ebook);
+        boolean ebooks = cb.isChecked();
         if(et != null && et.getText().toString() != null && !et.getText().toString().equals("")){
             String s = et.getText().toString();
             Intent intent = new Intent(this, SearchResultsActivity.class);
             Log.d("blah", "searching for " + s);
-            intent.putExtra("search", s);
+            Bundle b = new Bundle();
+            b.putString("search", s);
+            b.putBoolean("ebooks", ebooks);
+            intent.putExtras(b);
             startActivity(intent);
         }
         else{
