@@ -50,8 +50,6 @@ public class MyActivity extends Activity {
     private boolean selected_genres[];
     public static ArrayList<BookList> myLists;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,11 +144,6 @@ public class MyActivity extends Activity {
                         .setApplicationName("API Project")
                         .setBooksRequestInitializer(new BooksRequestInitializer(getString(R.string.ANDROID_KEY)))
                         .build();
-
-                /* TODO: base search terms on input rather than constant
-                 * TODO: implement heuristic for uncommon books
-                 */
-
 
                 int num_books = 0;
 
@@ -251,10 +244,8 @@ public class MyActivity extends Activity {
                 }
                 Log.d("blah", "adding after continuing");
                 api_calls++;
-
             }
             return null;
-
     }
 
 }
