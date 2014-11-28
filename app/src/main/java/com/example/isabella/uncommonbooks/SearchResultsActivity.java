@@ -70,7 +70,6 @@ public class SearchResultsActivity extends Activity {
             return true;
         }
         else if(id == R.id.view_lists){
-            //This needs to change so that it only starts the activity one time!
             Intent intent = new Intent(this, ListOfListsActivity.class);
             startActivity(intent);
             System.out.println("Got past startActivity");
@@ -104,48 +103,49 @@ public class SearchResultsActivity extends Activity {
                 //Log.d("blah", "Items: "+volumes.getTotalItems().toString());
 
                 book_list = new ArrayList<Book>();
-                for(Volume volume: volumes.getItems()){
-                    Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-                    if(volumeInfo != null) {
-                        Log.d("blah", volumeInfo.getTitle());
-                       // Log.d("blah", volumeInfo.getAuthors().toString());
-                        String title = volumeInfo.getTitle() != null ?
-                                volumeInfo.getTitle() : "title missing";
-                        String author = volumeInfo.getAuthors().toString() != null ?
-                                volumeInfo.getAuthors().toString() : "authors missing";
-                        //removing brackets
-                        author = author.substring(1, author.length() - 1);
-                        String desc = volumeInfo.getDescription() != null ?
-                                volumeInfo.getDescription() : "description missing";
-                        double avg = volumeInfo.getAverageRating() != null ?
-                                volumeInfo.getAverageRating() : -1;
-                        int numRatings = volumeInfo.getRatingsCount() != null ?
-                                volumeInfo.getRatingsCount() : -1;
+                if(volumes != null && volumes.getTotalItems() != 0) {
+                    for (Volume volume : volumes.getItems()) {
+                        Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+                        if (volumeInfo != null) {
+                            Log.d("blah", volumeInfo.getTitle());
+                            // Log.d("blah", volumeInfo.getAuthors().toString());
+                            String title = volumeInfo.getTitle() != null ?
+                                    volumeInfo.getTitle() : "title missing";
+                            String author = volumeInfo.getAuthors() != null ?
+                                    volumeInfo.getAuthors().toString() : "authors missing";
+                            //removing brackets
+                            author = author.substring(1, author.length() - 1);
+                            String desc = volumeInfo.getDescription() != null ?
+                                    volumeInfo.getDescription() : "description missing";
+                            double avg = volumeInfo.getAverageRating() != null ?
+                                    volumeInfo.getAverageRating() : -1;
+                            int numRatings = volumeInfo.getRatingsCount() != null ?
+                                    volumeInfo.getRatingsCount() : -1;
 
-                        Bitmap ibmp = null;  //make this a default image in future
-                        Bitmap tbmp = null; //thumbnail bitmap
-                        try {
-                            //setting up large image
-                            String imageString = volumeInfo.getImageLinks().getThumbnail();
-                            URL imgUrl = new URL(imageString);
-                            Log.d("blah", "img = " + imageString);
-                            ibmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                            Bitmap img_bmp = null;  //make this a default image in future
+                            Bitmap thumb_bmp = null; //thumbnail bitmap
+                            try {
+                                //setting up large image
+                                if(volumeInfo.getImageLinks() != null) {
+                                    String imageString = volumeInfo.getImageLinks().getThumbnail();
+                                    URL imgUrl = new URL(imageString);
+                                    Log.d("blah", "img = " + imageString);
+                                    img_bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                                }
+                                //setting up smaller image
+                                /*String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
+                                URL thumbUrl = new URL(thumbString);
+                                Log.d("blah", "thumb = " + thumbString);
+                                tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());*/
+                            } catch (MalformedURLException e) {
+                                Log.d("Error: ", "bad URL");
+                            } catch (IOException e) {
+                                Log.d("Error: ", "IOException using bitmap");
+                            }
 
-                            //setting up smaller image
-                            String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
-                            URL thumbUrl = new URL(thumbString);
-                            Log.d("blah", "thumb = " + thumbString);
-                            tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());
+                            Book b = new Book(title, author, img_bmp, thumb_bmp, desc, avg, numRatings);
+                            book_list.add(b);
                         }
-                        catch(MalformedURLException e){
-                            Log.d("Error: ", "bad URL");
-                        }
-                        catch(IOException e){
-                            Log.d("Error: ", "IOException using bitmap");
-                        }
-
-                        Book b = new Book(title, author, ibmp, tbmp, desc, avg, numRatings);
-                        book_list.add(b);
                     }
                 }
                 Log.d("blah", "all books added to list");
@@ -173,16 +173,17 @@ public class SearchResultsActivity extends Activity {
                 public void onItemClick(AdapterView<?> parent, final View view,
                                         int position, long id){
                     Book book = (Book) parent.getItemAtPosition(position);
-                    //make a new activity
+                    Log.d("blah", "book being sent to DetailActivity = " + book.getTitle() + " by " + book.getAuthor());
+                    //Show details of the book
                     Intent intent = new Intent(view.getContext(), DetailActivity.class);
                     Bundle b = new Bundle();
-
-                    //Now change this to use all of the books actual attributes
                     b.putString("title", book.getTitle());
                     b.putString("author", book.getAuthor());
                     b.putString("description", book.getDescription());
                     b.putParcelable("image", book.getImage());
-                    b.putParcelable("thumbnail", book.getThumbnail());
+                    b.putDouble("ratings", book.getRating());
+                    b.putInt("num_ratings", book.getNumRatings());
+                    Log.d("blah", "put book in bundle");
                     intent.putExtras(b);
                     startActivity(intent);
                 }
@@ -193,7 +194,7 @@ public class SearchResultsActivity extends Activity {
 
 
     /**
-     * Shows the splash screen over the full Activity
+     * Shows the splash screen over the SearchResultsActivity
      */
     protected void showSplashScreen() {
         mSplashDialog = new Dialog(this);

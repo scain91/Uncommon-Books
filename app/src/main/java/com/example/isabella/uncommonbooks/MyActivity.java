@@ -47,12 +47,19 @@ import java.util.Random;
 public class MyActivity extends Activity {
 
     private boolean selected_genres[];
+    public static ArrayList<BookList> myLists;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(true) {    //savedInstanceState == null
+            myLists = new ArrayList<BookList>();
+        }
+        else {
+            //figure out how to save myLists
+        }
         setContentView(R.layout.activity_my);
         //Grab genres from Google and set the size of selected_genres to the number we find
         selected_genres = new boolean[6];
@@ -71,11 +78,10 @@ public class MyActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         else if(id == R.id.view_lists){
             Intent intent = new Intent(this, ListOfListsActivity.class);
             startActivity(intent);
-            System.out.println("Got past startActivity");
+            Log.d("blah", "starting list of lists activity");
         }
         return super.onOptionsItemSelected(item);
     }
