@@ -42,6 +42,7 @@ public class DetailActivity extends Activity {
             txtTitle.setText(book.getTitle());
             txtAuthor.setText(book.getAuthor());
             txtDescription.setText(book.getDescription());
+            img.setImageBitmap(book.getImage());
             //Currently works
 
             img.setImageBitmap((Bitmap) b.getParcelable("image"));
