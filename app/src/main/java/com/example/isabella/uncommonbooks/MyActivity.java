@@ -192,6 +192,8 @@ public class MyActivity extends Activity {
             b.putString("description", book_using.getDescription());
             b.putParcelable("image", book_using.getImage());
             b.putParcelable("thumbnail", book_using.getThumbnail());
+            b.putDouble("ratings", book_using.getRating());
+            b.putInt("num_ratings", book_using.getNumRatings());
             intent.putExtras(b);
             startActivity(intent);
             Log.d("blah", "exited onPostExecute");

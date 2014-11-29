@@ -38,10 +38,14 @@ public class DetailActivity extends Activity {
             TextView txtTitle = (TextView) findViewById(R.id.title_book);
             TextView txtAuthor = (TextView) findViewById(R.id.author_book);
             TextView txtDescription = (TextView) findViewById(R.id.description_book);
+            TextView txtRatings = (TextView) findViewById(R.id.ratings_book);
             ImageView img = (ImageView) findViewById(R.id.image_book);
             txtTitle.setText(book.getTitle());
             txtAuthor.setText(book.getAuthor());
             txtDescription.setText(book.getDescription());
+            String rating = book.getRating() != -1? String.valueOf(book.getRating()): "Unavailable";
+            String num_ratings = book.getNumRatings() != -1? String.valueOf(book.getNumRatings()): "Unavailable";
+            txtRatings.setText("Rating: "+rating+" Num. Ratings: "+num_ratings);
             img.setImageBitmap(book.getImage());
             //Currently works
 
