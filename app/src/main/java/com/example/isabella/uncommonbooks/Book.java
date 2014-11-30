@@ -30,6 +30,18 @@ public class Book{
     public int getNumRatings() {
         return numRatings;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Book))
+            return false;
+        Book b = (Book) obj;
+        return b.getTitle().equals(this.title) &&
+                b.getAuthor().equals(this.author) &&
+                b.getDescription().equals(this.description) &&
+                b.getRating() == rating && b.getNumRatings() == numRatings;
+    }
+
     private String title, author, description;
     private Bitmap image, thumbnail;
     private double rating;
