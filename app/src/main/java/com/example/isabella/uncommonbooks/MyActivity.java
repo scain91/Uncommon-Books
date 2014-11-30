@@ -50,6 +50,11 @@ public class MyActivity extends Activity {
     private boolean selected_genres[];
     public static ArrayList<BookList> myLists;
 
+    public static final int MIN_NUM_RATINGS = 10;
+    public static final int MAX_NUM_RATINGS = 50;
+    public static final double MIN_AVG_RATING = 3.0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,29 +222,30 @@ public class MyActivity extends Activity {
                 if(volumes != null && volumes.getTotalItems() > 0){
                     for(Volume volume: volumes.getItems()) {
                         Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-                        if (volumeInfo == null || volumeInfo.getTitle() == null ||
+                        if (!(volumeInfo == null || volumeInfo.getTitle() == null ||
                                 volumeInfo.getDescription() == null ||
-                                volumeInfo.getAverageRating() == null || volumeInfo.getRatingsCount() == null
+                                volumeInfo.getAverageRating() == null || volumeInfo.getAverageRating() < MIN_AVG_RATING
+                                || volumeInfo.getRatingsCount() == null || volumeInfo.getRatingsCount() < MIN_NUM_RATINGS
+                                || volumeInfo.getRatingsCount() > MAX_NUM_RATINGS
                                 || volumeInfo.getImageLinks() == null || volumeInfo.getImageLinks().getThumbnail() == null
-                                || volumeInfo.getImageLinks().getSmallThumbnail() == null) {
-                            Log.d("blah", "Continuing");
-                        } else {
-                            String author = volumeInfo.getAuthors() != null ?
-                                    volumeInfo.getAuthors().toString() : "authors missing";
-                            //removing brackets
-                            author = author.substring(1, author.length() - 1);
-                            //setting up large image
-                            String imageString = volumeInfo.getImageLinks().getThumbnail();
-                            URL imgUrl = new URL(imageString);
-                            ibmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-                            //setting up smaller image
-                            String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
-                            URL thumbUrl = new URL(thumbString);
-                            tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());
-                            Log.d("blah", "Num Tries:" + String.valueOf(api_calls));
-                            Log.d("blah", volumeInfo.getTitle());
-                            Book b = new Book(volumeInfo.getTitle(), author, ibmp, tbmp, volumeInfo.getDescription(), volumeInfo.getAverageRating(), volumeInfo.getRatingsCount());
-                            return b;
+                                || volumeInfo.getImageLinks().getSmallThumbnail() == null)) {
+
+                                String author = volumeInfo.getAuthors() != null ?
+                                        volumeInfo.getAuthors().toString() : "authors missing";
+                                //removing brackets
+                                author = author.substring(1, author.length() - 1);
+                                //setting up large image
+                                String imageString = volumeInfo.getImageLinks().getThumbnail();
+                                URL imgUrl = new URL(imageString);
+                                ibmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                                //setting up smaller image
+                                String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
+                                URL thumbUrl = new URL(thumbString);
+                                tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());
+                                Log.d("blah", "Num Tries:" + String.valueOf(api_calls));
+                                Log.d("blah", volumeInfo.getTitle());
+                                Book b = new Book(volumeInfo.getTitle(), author, ibmp, tbmp, volumeInfo.getDescription(), volumeInfo.getAverageRating(), volumeInfo.getRatingsCount());
+                                return b;
                         }
                     }
 

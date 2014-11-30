@@ -158,9 +158,10 @@ public class SearchResultsActivity extends Activity {
                             } catch (IOException e) {
                                 Log.d("Error: ", "IOException using bitmap");
                             }
-
-                            Book b = new Book(title, author, img_bmp, thumb_bmp, desc, avg, numRatings);
-                            book_list.add(b);
+                            if(numRatings > MyActivity.MIN_NUM_RATINGS && numRatings < MyActivity.MAX_NUM_RATINGS  && avg > MyActivity.MIN_AVG_RATING) {
+                                Book b = new Book(title, author, img_bmp, thumb_bmp, desc, avg, numRatings);
+                                book_list.add(b);
+                            }
                         }
                     }
                 }
