@@ -44,7 +44,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class MyActivity extends Activity {
 
     private boolean selected_genres[];
@@ -53,7 +52,6 @@ public class MyActivity extends Activity {
     public static final int MIN_NUM_RATINGS = 5;
     public static final int MAX_NUM_RATINGS = 50;
     public static final double MIN_AVG_RATING = 3.0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

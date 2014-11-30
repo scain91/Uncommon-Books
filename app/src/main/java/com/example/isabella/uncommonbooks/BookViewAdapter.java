@@ -53,11 +53,6 @@ public class BookViewAdapter extends ArrayAdapter<Book> {
 
         holder.txtAuthor.setText(book.getAuthor());
         holder.txtTitle.setText(book.getTitle());
-
-        //Trying to make image loading an asynchronous task
-        //new DownloadImageTask(holder.imageView).execute(book.getImage());
-
-
         holder.imageView.setImageBitmap(book.getImage());
 
         return convertView;

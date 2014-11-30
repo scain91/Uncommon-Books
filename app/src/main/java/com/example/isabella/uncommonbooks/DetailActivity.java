@@ -7,9 +7,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +61,10 @@ public class DetailActivity extends Activity {
     }
 
     public void addBookToList(View v) {
-        String[] u = new String[MyActivity.myLists.size()];
-        for (int i = 0; i < u.length; i++)
+        String[] u = new String[MyActivity.myLists.size() + 1];
+        for (int i = 0; i < MyActivity.myLists.size(); i++)
             u[i] = MyActivity.myLists.get(i).getName();
+        u[MyActivity.myLists.size()] = "New list...";
         final String[] myListsNames = u;
 
         AlertDialog.Builder listPopUp = new AlertDialog.Builder(this);
@@ -70,7 +74,11 @@ public class DetailActivity extends Activity {
                 Log.d("blah", "trying to add");
 
                 //Add to user's lists
-                if (MyActivity.myLists.get(whichButton).getBooks().contains(book)) {
+                if(whichButton == MyActivity.myLists.size()){
+                    Log.d("blah", "adding new list");
+                    addNewList();
+                }
+                else if (MyActivity.myLists.get(whichButton).getBooks().contains(book)) {
                     Log.d("blah", "tried to add book to list it's already in.");
                     Toast toast = Toast.makeText(getApplicationContext(), book.getTitle() +
                             " is already in " + myListsNames[whichButton], Toast.LENGTH_SHORT);
@@ -86,4 +94,38 @@ public class DetailActivity extends Activity {
         });
         listPopUp.show();
     }
+
+    public void addNewList() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BookList bl = new BookList(input.getText().toString());
+                bl.addBook(book);
+                MyActivity.myLists.add(bl);
+                Log.d("blah", "new_name set to " + input.getText().toString());
+                Toast toast = Toast.makeText(getApplicationContext(), "Adding " + book.getTitle() +
+                        " to new list " + bl.getName(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setTitle("New book list");
+        builder.show();
+    }
+
+
+
 }
