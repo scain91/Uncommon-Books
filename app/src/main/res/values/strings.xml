@@ -6,7 +6,7 @@
     <string name="title">Uncommon Books</string>
     <string name="search_hint">Keyword(s)</string>
     <string name="choose_subject_button_text">Choose Genre/Subject</string>
-    <string name="free_ebook_text">Only browse free ebooks</string>
+    <string name="ebook_only_text">Only browse ebooks</string>
     <string name="search_button_text">Search Books</string>
     <string name="random_button_text">Random Books</string>
     <string name="book_title">Book Title</string>

@@ -112,7 +112,7 @@ public class SearchResultsActivity extends Activity {
                     https://developers.google.com/resources/api-libraries/documentation/books/v1/java/latest/
                 */
                 if(freeEBooks)
-                    volumesList.setFilter("free-ebooks");
+                    volumesList.setFilter("ebooks");
 
 //                Log.d("blah", "before execute");
 //
