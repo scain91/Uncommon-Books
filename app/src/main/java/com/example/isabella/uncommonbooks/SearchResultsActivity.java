@@ -37,6 +37,7 @@ public class SearchResultsActivity extends Activity {
     protected Dialog mSplashDialog;
     protected BookViewAdapter adapter;
     protected boolean freeEBooks;
+    public final static int MAX_RESULTS = 40;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class SearchResultsActivity extends Activity {
                 /* TODO: implement heuristic for uncommon books
                  */
                 Books.Volumes.List volumesList = books.volumes().list(arg0[0]);
+                volumesList.setMaxResults(new Long(40));
                 /*This is where we can change the results of the search
                   Example:
                     volumesList.setMaxResults((long) 1);
@@ -111,56 +113,65 @@ public class SearchResultsActivity extends Activity {
                 */
                 if(freeEBooks)
                     volumesList.setFilter("free-ebooks");
-                Log.d("blah", "before execute");
-                Volumes volumes = volumesList.execute();
 
-                Log.d("blah", "after execute about to start adding to list");
-                Log.d("blah", volumes.toPrettyString());
+//                Log.d("blah", "before execute");
+//
+//                Log.d("blah", "after execute about to start adding to list");
+//                Log.d("blah", volumes.toPrettyString());
                 //Log.d("blah", "Items: "+volumes.getTotalItems().toString());
-
+                long startIndex = 0;
                 book_list = new ArrayList<Book>();
-                if(volumes != null && volumes.getTotalItems() != 0) {
-                    for (Volume volume : volumes.getItems()) {
-                        Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-                        if (volumeInfo != null) {
-                            Log.d("blah", volumeInfo.getTitle());
-                            // Log.d("blah", volumeInfo.getAuthors().toString());
-                            String title = volumeInfo.getTitle() != null ?
-                                    volumeInfo.getTitle() : "title missing";
-                            String author = volumeInfo.getAuthors() != null ?
-                                    volumeInfo.getAuthors().toString() : "authors missing";
-                            //removing brackets
-                            author = author.substring(1, author.length() - 1);
-                            String desc = volumeInfo.getDescription() != null ?
-                                    volumeInfo.getDescription() : "description missing";
-                            double avg = volumeInfo.getAverageRating() != null ?
-                                    volumeInfo.getAverageRating() : -1;
-                            int numRatings = volumeInfo.getRatingsCount() != null ?
-                                    volumeInfo.getRatingsCount() : -1;
+                while(book_list.size() < 5){
+                    volumesList.setStartIndex(startIndex);
+                    Volumes volumes = volumesList.execute();
+                    startIndex += MAX_RESULTS;
+                    if (volumes == null || volumes.getTotalItems() == 0) {
+                        Log.d("blah", "no more");
+                        break;
+                    }
+                    else{
+                        for (Volume volume : volumes.getItems()) {
+                            Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+                            if (volumeInfo != null) {
+                                Log.d("blah", volumeInfo.getTitle());
+                                // Log.d("blah", volumeInfo.getAuthors().toString());
+                                String title = volumeInfo.getTitle() != null ?
+                                        volumeInfo.getTitle() : "title missing";
+                                String author = volumeInfo.getAuthors() != null ?
+                                        volumeInfo.getAuthors().toString() : "authors missing";
+                                //removing brackets
+                                author = author.substring(1, author.length() - 1);
+                                String desc = volumeInfo.getDescription() != null ?
+                                        volumeInfo.getDescription() : "description missing";
+                                double avg = volumeInfo.getAverageRating() != null ?
+                                        volumeInfo.getAverageRating() : -1;
+                                int numRatings = volumeInfo.getRatingsCount() != null ?
+                                        volumeInfo.getRatingsCount() : -1;
 
-                            Bitmap img_bmp = null;  //make this a default image in future
-                            Bitmap thumb_bmp = null; //thumbnail bitmap
-                            try {
-                                //setting up large image
-                                if(volumeInfo.getImageLinks() != null) {
-                                    String imageString = volumeInfo.getImageLinks().getThumbnail();
-                                    URL imgUrl = new URL(imageString);
-                                    Log.d("blah", "img = " + imageString);
-                                    img_bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
-                                }
-                                //setting up thumbnail image
+                                Bitmap img_bmp = null;  //make this a default image in future
+                                Bitmap thumb_bmp = null; //thumbnail bitmap
+                                try {
+                                    //setting up large image
+                                    if (volumeInfo.getImageLinks() != null) {
+                                        String imageString = volumeInfo.getImageLinks().getThumbnail();
+                                        URL imgUrl = new URL(imageString);
+                                        Log.d("blah", "img = " + imageString);
+                                        img_bmp = BitmapFactory.decodeStream(imgUrl.openConnection().getInputStream());
+                                    }
+                                    //setting up thumbnail image
                                 /*String thumbString = volumeInfo.getImageLinks().getSmallThumbnail();
                                 URL thumbUrl = new URL(thumbString);
                                 Log.d("blah", "thumb = " + thumbString);
                                 tbmp = BitmapFactory.decodeStream(thumbUrl.openConnection().getInputStream());*/
-                            } catch (MalformedURLException e) {
-                                Log.d("Error: ", "bad URL");
-                            } catch (IOException e) {
-                                Log.d("Error: ", "IOException using bitmap");
-                            }
-                            if(numRatings > MyActivity.MIN_NUM_RATINGS && numRatings < MyActivity.MAX_NUM_RATINGS  && avg > MyActivity.MIN_AVG_RATING) {
-                                Book b = new Book(title, author, img_bmp, thumb_bmp, desc, avg, numRatings);
-                                book_list.add(b);
+                                } catch (MalformedURLException e) {
+                                    Log.d("Error: ", "bad URL");
+                                } catch (IOException e) {
+                                    Log.d("Error: ", "IOException using bitmap");
+                                }
+                                if (numRatings > MyActivity.MIN_NUM_RATINGS && numRatings < MyActivity.MAX_NUM_RATINGS && avg > MyActivity.MIN_AVG_RATING) {
+                                    Book b = new Book(title, author, img_bmp, thumb_bmp, desc, avg, numRatings);
+                                    book_list.add(b);
+                                }
                             }
                         }
                     }
