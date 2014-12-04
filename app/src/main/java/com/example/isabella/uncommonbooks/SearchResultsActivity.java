@@ -249,4 +249,10 @@ public class SearchResultsActivity extends Activity {
             mSplashDialog = null;
         }
     }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        MyActivity.saveLists();
+    }
 }

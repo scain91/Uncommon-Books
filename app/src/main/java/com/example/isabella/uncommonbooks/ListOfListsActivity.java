@@ -1,7 +1,13 @@
 package com.example.isabella.uncommonbooks;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
@@ -17,14 +23,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
-
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.*;
 import java.util.Iterator;
 
 import java.util.ArrayList;
 
-/**
- * Created by Isabella on 10/28/2014.
- */
+
 public class ListOfListsActivity extends Activity {
     protected static boolean active = false;
 
@@ -32,11 +38,12 @@ public class ListOfListsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_lists);
-
         active = true;
         ListView listview = (ListView) findViewById(R.id.list_of_lists_view);
+
         final ArrayAdapter adapter = new ArrayAdapter(this, R.layout.book_list_item,
                 R.id.list_name, MyActivity.myLists);
+
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,5 +96,7 @@ public class ListOfListsActivity extends Activity {
     protected void onStop() {
         super.onStop();
         active = false;
+        MyActivity.saveLists();
+
     }
 }

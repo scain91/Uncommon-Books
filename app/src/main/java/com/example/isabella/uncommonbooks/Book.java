@@ -58,5 +58,9 @@ public class Book{
         numRatings = nR;
     }
 
+    public boolean equals(Book book2){
+        return this.title.equals(book2.title) && this.author.equals(book2.author) && this.description.equals(book2.description);
+    }
+
 
 }

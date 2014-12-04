@@ -51,6 +51,10 @@ public class ListDetailActivity extends Activity{
             }
         });
     }
-
+    @Override
+    protected void onStop(){
+        super.onStop();
+        MyActivity.saveLists();
+    }
 
 }

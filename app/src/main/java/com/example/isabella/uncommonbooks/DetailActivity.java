@@ -126,6 +126,10 @@ public class DetailActivity extends Activity {
         builder.show();
     }
 
-
+    @Override
+    protected void onStop(){
+        super.onStop();
+        MyActivity.saveLists();
+    }
 
 }

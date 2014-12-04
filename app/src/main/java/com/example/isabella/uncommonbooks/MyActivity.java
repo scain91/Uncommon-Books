@@ -2,10 +2,15 @@ package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
@@ -53,21 +59,57 @@ public class MyActivity extends Activity {
     public static final int MAX_NUM_RATINGS = 50;
     public static final double MIN_AVG_RATING = 3.0;
 
+    public static ListDBHelper helper;
+    public static SQLiteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(true) {    //savedInstanceState == null
-            myLists = new ArrayList<BookList>();
-            myLists.add(new BookList("Example 1"));
-            myLists.add(new BookList("Example 2"));
-        }
-        else {
-            //figure out how to save myLists
-        }
+
+        myLists = new ArrayList<BookList>();
+        helper = new ListDBHelper(this);
+        db = helper.getWritableDatabase();
+        retrieveLists();
         setContentView(R.layout.activity_my);
         //Grab genres from Google and set the size of selected_genres to the number we find
         selected_genres = new boolean[6];
         System.out.println("Created");
+    }
+
+    public void retrieveLists() {
+        Cursor table = MyActivity.db.rawQuery("Select * from " + ListDBHelper.TABLE_NAME, null);
+        String list_name = "";
+        Log.d("blah", "L: " + MyActivity.myLists.toString());
+        BookList book_list;
+        if (table.moveToFirst()) {
+            while (table.moveToNext()) {
+                list_name = table.getString(0);
+                book_list = new BookList(list_name);
+                Log.d("blah", "List: " + list_name);
+                boolean new_list = true;
+                for (BookList b : MyActivity.myLists) {
+                    if (b.getName().equals(list_name)) {
+                        new_list = false;
+                        book_list = b;
+                        break;
+                    }
+                }
+                if (new_list) {
+                    MyActivity.myLists.add(book_list);
+                }
+                if (!table.getString(1).equals("") && !table.getString(2).equals("")) {
+                    Log.d("blah", "Not null");
+                    byte[] image_rep = table.getBlob(3);
+                    byte[] thumbnail_rep = table.getBlob(4);
+                    Book book = new Book(table.getString(1), table.getString(2), BitmapFactory.decodeByteArray(image_rep, 0, image_rep.length), BitmapFactory.decodeByteArray(thumbnail_rep, 0, thumbnail_rep.length), table.getString(5), table.getDouble(6), table.getInt(7));
+                    ArrayList<Book> books = book_list.getBooks();
+                    if (!books.contains(book))
+                        book_list.addBook(book);
+                }
+            }
+            Log.d("blah", MyActivity.myLists.toString());
+
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -202,6 +244,50 @@ public class MyActivity extends Activity {
             Log.d("blah", "exited onPostExecute");
 
 
+        }
+    }
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+        saveLists();
+
+    }
+    public static void saveLists() {
+        ContentValues columns = new ContentValues();
+//        columns.put(ListDBHelper.LIST_NAME_COL, "bl");
+        Log.d("blah", "stop");
+
+        for (BookList list : myLists) {
+            ArrayList<Book> books = list.getBooks();
+            columns.put(ListDBHelper.LIST_NAME_COL, list.getName());
+            if (books.size() == 0) {
+                columns.put(ListDBHelper.BOOK_TITLE_COL, "");
+                columns.put(ListDBHelper.BOOK_AUTHOR_COL, "");
+                columns.put(ListDBHelper.BOOK_DESCR_COL, "");
+                columns.put(ListDBHelper.BOOK_IMAGE_COL, "");
+                columns.put(ListDBHelper.BOOK_THUMBNAIL_COL, "");
+                columns.put(ListDBHelper.BOOK_RATINGS_COL, "");
+                columns.put(ListDBHelper.BOOK_NUM_RATINGS_COL, "");
+            } else {
+                for (Book book : books) {
+                    columns.put(ListDBHelper.BOOK_TITLE_COL, book.getTitle());
+                    columns.put(ListDBHelper.BOOK_AUTHOR_COL, book.getAuthor());
+                    columns.put(ListDBHelper.BOOK_DESCR_COL, book.getDescription());
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    book.getImage().compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+                    columns.put(ListDBHelper.BOOK_IMAGE_COL, outputStream.toByteArray());
+                    ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
+                    book.getImage().compress(Bitmap.CompressFormat.PNG, 0, outputStream2);
+                    columns.put(ListDBHelper.BOOK_THUMBNAIL_COL, outputStream2.toByteArray());
+                    columns.put(ListDBHelper.BOOK_RATINGS_COL, book.getRating());
+                    columns.put(ListDBHelper.BOOK_NUM_RATINGS_COL, book.getNumRatings());
+
+                }
+            }
+            Long row_id = db.insert(ListDBHelper.TABLE_NAME, null, columns);
+            columns.clear();
+            Log.d("blah", "Row: " + String.valueOf(row_id));
         }
     }
     //at some point, make it stop!

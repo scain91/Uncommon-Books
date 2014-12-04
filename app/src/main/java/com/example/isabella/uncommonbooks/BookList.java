@@ -5,9 +5,6 @@ import android.os.Parcelable;
 import android.os.Parcel;
 import android.os.Bundle;
 
-/**
- * Created by Isabella on 10/28/2014.
- */
 public class BookList{
 
     private String name;
@@ -33,5 +30,9 @@ public class BookList{
     }
 
     public String getName(){return name;}
+
+    public boolean equals(String list_name){
+        return this.name.equals(list_name);
+    }
 
 }
