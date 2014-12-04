@@ -23,16 +23,6 @@
         android:hint="@string/search_hint"
         android:layout_marginTop="50dp"/>
 
-    <Button
-        android:id="@+id/choose_subject"
-        android:text="@string/choose_subject_button_text"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_horizontal"
-        android:onClick="genre_button_listener"
-        android:layout_marginTop="40dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <CheckBox
         android:id="@+id/checkbox_free_ebook"
         android:layout_width="wrap_content"
@@ -43,23 +33,45 @@
         android:layout_marginTop="30dp" />
 
     <Button
-        android:id="@+id/search_books_button"
-        android:text="@string/search_button_text"
-        android:onClick="search_button_listener"
-        android:gravity="center_vertical"
+        android:id="@+id/choose_subject"
+        android:text="@string/choose_subject_button_text"
+        android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
+        android:onClick="genre_button_listener"
+        android:layout_marginTop="40dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/random_books_button"
-        android:onClick="random_button_listener"
-        android:text="@string/random_button_text"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/search_books_button"
+            android:text="@string/search_button_text"
+            android:onClick="search_button_listener"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/random_books_button"
+            android:onClick="random_button_listener"
+            android:text="@string/random_button_text"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
+
 
 </LinearLayout>
