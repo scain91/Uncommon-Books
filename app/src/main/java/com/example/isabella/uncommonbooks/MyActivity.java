@@ -73,14 +73,14 @@ public class MyActivity extends Activity {
         myLists = new ArrayList<BookList>();
         helper = new ListDBHelper(this);
         db = helper.getWritableDatabase();
-        retrieveLists();
+        retreiveLists();
         setContentView(R.layout.activity_my);
         //Grab genres from Google and set the size of selected_genres to the number we find
         selected_genres = new boolean[6];
         System.out.println("Created");
     }
 
-    public void retrieveLists() {
+    public void retreiveLists() {
         Cursor table = MyActivity.db.rawQuery("Select * from " + ListDBHelper.TABLE_NAME, null);
         String list_name = "";
         Log.d("blah", "L: " + MyActivity.myLists.toString());
