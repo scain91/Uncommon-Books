@@ -128,6 +128,11 @@ public class MyActivity extends Activity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.view_home) {
+            Intent intent = new Intent(this, MyActivity.class);
+            startActivity(intent);
+            Log.d("blah", "starting MyActivity");
+        }
         else if(id == R.id.view_lists){
             Intent intent = new Intent(this, ListOfListsActivity.class);
             startActivity(intent);
