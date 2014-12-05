@@ -237,7 +237,7 @@ public class SearchResultsActivity extends Activity {
             public void run() {
                 removeSplashScreen();
             }
-        }, 3000);
+        }, 20000);
     }
 
     /**

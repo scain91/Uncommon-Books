@@ -2,6 +2,7 @@ package com.example.isabella.uncommonbooks;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +60,8 @@ public class MyActivity extends Activity {
     public static final int MIN_NUM_RATINGS = 5;
     public static final int MAX_NUM_RATINGS = 50;
     public static final double MIN_AVG_RATING = 3.0;
+
+    protected Dialog mSplashDialog;
 
     public static ListDBHelper helper;
     public static SQLiteDatabase db;
@@ -134,6 +138,7 @@ public class MyActivity extends Activity {
 
     public void random_button_listener(View v) {
         RandomApiAccess r = new RandomApiAccess();
+        showSplashScreen();
         //r.execute("9780375753770");
         r.execute();
 //        Intent intent = new Intent(this, DetailActivity.class);
@@ -194,7 +199,7 @@ public class MyActivity extends Activity {
 
 
                 //2 is the number of random books to load at a time; we can change it later
-                while(num_books < 2){
+                while(num_books < 1){
                     try{
 
                             Book b = getValidRandom(books);
@@ -228,6 +233,7 @@ public class MyActivity extends Activity {
         @Override
         protected void onPostExecute(Void a) {
 
+            removeSplashScreen();
             Log.d("blah", "entered onPostExecute");
             Book book_using = book_list.get(0);
             Intent intent = new Intent(MyActivity.this, DetailActivity.class);
@@ -338,6 +344,35 @@ public class MyActivity extends Activity {
                 api_calls++;
             }
             return null;
+    }
+
+    /**
+     * Shows the splash screen over the SearchResultsActivity
+     */
+    protected void showSplashScreen() {
+        mSplashDialog = new Dialog(this);
+        mSplashDialog.setContentView(R.layout.loading_screen);
+        mSplashDialog.setCancelable(false);
+        mSplashDialog.show();
+
+        // Set Runnable to remove splash screen just in case
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                removeSplashScreen();
+            }
+        }, 20000);
+    }
+
+    /**
+     * Removes the Dialog that displays the splash screen
+     */
+    protected void removeSplashScreen() {
+        if (mSplashDialog != null) {
+            mSplashDialog.dismiss();
+            mSplashDialog = null;
+        }
     }
 
 }
